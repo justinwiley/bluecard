@@ -1,0 +1,52 @@
+{%extends 'shared/header.html'%}
+{% load bootstrap3 %}
+
+{% block content %}
+  <h3>Your Customers</h3>
+  {% for customer in cs %}
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-12">
+         <div class="well well-sm">
+            <div class="row">
+               <div class="col-sm-6 col-md-4">
+                  <img src="/static/images/license.jpg" alt="" class="img-rounded img-responsive"/>
+               </div>
+               <div class="col-sm-6 col-md-8">
+                  <div class="row">
+                    <h3>{{ customer.name }}</h3>
+                    <small>Address:
+                      <cite title="San Francisco, USA">
+                        {% bootstrap_icon "star" %} San Francisco, USA
+                      </cite>
+                    </small>
+                    <p>
+                       Last Appointment: {{ customer.updated }}
+                    </p>
+                    {% buttons %}
+                        <a href="{% url 'customer' customer.id %}" class="btn btn-primary" role="button">
+                          {% bootstrap_icon "edit" %} Edit
+                        </a>
+                        <a href="{% url 'imports' customer.id %}" class="btn btn-success" role="button">
+                          {% bootstrap_icon "picture" %} Imported Documents
+                        </a>
+                        <a href="{% url 'upload' customer.id %}" class="btn btn-info" role="button">
+                          {% bootstrap_icon "upload" %} Upload
+                        </a>
+                    {% endbuttons %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  {% endfor %}
+  <div class="col-lg-12 text-right">
+    <a href="{% url 'new' %}" class="btn btn-info" role="button">
+      {% bootstrap_icon "new" %} Create New Customer
+    </a>
+    <a href="{% url 'logout' %}" class="btn btn-success" role="button">
+      {% bootstrap_icon "logout" %} Logout
+    </a>
+  </div>
+
+{% endblock content %}

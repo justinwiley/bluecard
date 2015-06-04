@@ -1,0 +1,148 @@
+{%extends 'shared/header.html'%}
+{% load bootstrap3 %}
+
+
+{% block content %}
+  <h3>Viewing Customer: {{customer.name}}</h3>
+  <p>Below you can upload an image of an ID document, or take a picture of a document image using your phones webcam.</p>
+  <!--take a picture-->
+  <div class="inner-container">
+    <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <h5>Take a picture using your camera</h5>
+        <div class="row">
+          <div class="col-lg-5 col-sm-10">
+            <div id="my_camera"></div>
+          </div>
+          <div class="col-lg-1 col-sm-2">
+            <div id="my_photo_booth">
+              <!-- shown before picture taking -->
+              <div id="pre_take_buttons">
+                {% buttons %}
+                  <button type="submit" class="btn btn-primary"= onClick="preview_snapshot()">
+                    {% bootstrap_icon "camera" %} Take Picture
+                  </button>
+                {% endbuttons %}
+                <br />
+              </div>
+              <!-- shown after -->
+              <div id="post_take_buttons" style="display:none">
+                {% buttons %}
+                  <button type="submit" class="btn btn-primary"= onClick="cancel_preview()">
+                    {% bootstrap_icon "camera" %} Cancel
+                  </button>
+                {% endbuttons %}
+                {% buttons %}
+                  <form action="{% url 'upload' customer.id %}" method="post" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary"= onClick="save_photo()">
+                      {% bootstrap_icon "floppy-open" %} Upload
+                    </button>
+                  </form>
+                {% endbuttons %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end take a picture-->
+      <div class="col-lg-6 col-sm-12">
+        <h5>Upload a new ID document</h5>
+        <form action="{% url 'upload' customer.id %}" method="post" class="form" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.field_errors }}
+        <div class="row">
+            <div class="col-lg-5 col-sm-10">
+              {% bootstrap_form form %}
+            </div>
+            <div class="col-lg-1 col-sm-2">
+                {% buttons %}
+                  <button type="submit" class="btn btn-primary">
+                    {% bootstrap_icon "floppy-open" %} Upload
+                  </button>
+                {% endbuttons %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-lg-12 text-right">
+      <a href="{% url 'index' %}" class="btn btn-info" role="button">
+        {% bootstrap_icon "back" %} Back
+      </a>
+    </div>
+  </div>
+
+  <!-- Configure a few settings and attach camera -->
+  <script language="JavaScript">
+    Webcam.set({
+      // live preview size
+      width: 320,
+      height: 240,
+      
+      // device capture size
+      dest_width: 640,
+      dest_height: 480,
+      
+      // final cropped size
+      crop_width: 480,
+      crop_height: 480,
+      
+      // format and quality
+      image_format: 'jpeg',
+      jpeg_quality: 90,
+      
+      // flip horizontal (mirror mode)
+      flip_horiz: true
+    });
+
+    Webcam.attach( '#my_camera' );
+    // preload shutter audio clip
+    var shutter = new Audio();
+    shutter.autoplay = false;
+    shutter.src = navigator.userAgent.match(/Firefox/) ? '/static/javascript/webcam/shutter.ogg' : '/static/javascript/webcam/shutter.mp3';
+    
+    function preview_snapshot() {
+      // play sound effect
+      try { shutter.currentTime = 0; } catch(e) {;} // fails in IE
+      shutter.play();
+      
+      // freeze camera so user can preview current frame
+      Webcam.freeze();
+      
+      // swap button sets
+      document.getElementById('pre_take_buttons').style.display = 'none';
+      document.getElementById('post_take_buttons').style.display = '';
+    }
+    
+    function cancel_preview() {
+      // cancel preview freeze and return to live camera view
+      Webcam.unfreeze();
+      
+      // swap buttons back to first set
+      document.getElementById('pre_take_buttons').style.display = '';
+      document.getElementById('post_take_buttons').style.display = 'none';
+    }
+    
+    function save_photo() {
+      // actually snap photo (from preview freeze) and display it
+      Webcam.snap( function(data_uri) {
+        // display results in page
+        // document.getElementById('results').innerHTML = 
+        //   '<h2>Here is your large, cropped image:</h2>' + 
+        //   '<img src="'+data_uri+'"/><br/></br>' + 
+        //   '<a href="'+data_uri+'" target="_blank">Open image in new window...</a>';
+        
+        // shut down camera, stop capturing
+        Webcam.reset();
+        
+        // show results, hide photo booth
+        document.getElementById('my_photo_booth').style.display = 'none';
+      } );
+    }
+  </script>
+
+{% endblock content %}

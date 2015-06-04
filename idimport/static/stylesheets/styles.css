@@ -1,0 +1,40 @@
+body {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: url('/static/images/hospital.jpg') no-repeat center center fixed;
+}
+
+h1.header {
+  text-transform: capitalize;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+p.lead {
+  font-style: italic;
+}
+
+div.inner-container {
+  background-color: 303030;
+  padding-top: 0.5em;
+  border-radius: 10px;
+  min-height: 300px;
+}
+
+.form-signin {
+  max-width: 330px;
+  margin: 0 auto;
+}
+.form-signin-heading {
+  background-color: rgba(0,0,0,0.3);
+  padding: 1em;
+}
+.form-signin .form-signin-heading {
+  margin-bottom: 1em;
+}
+.form-signin .form-control {
+  margin-bottom: 1em;
+}
+
+div.even { background: #404040; padding: 1em; }
+div.odd { background: #777; padding: 3em;}
+div.right-status { border-radius: 0px 15px 15px 0px }

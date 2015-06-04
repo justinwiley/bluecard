@@ -1,0 +1,22 @@
+{
+  "name": "aws-lambda",
+  "version": "1.0.0",
+  "description": "Bluecard AWS lambda component",
+  "main": "process-lambda.js",
+  "dependencies": {
+    "async": "^1.0.0",
+    "aws-sdk": "^2.1.30",
+    "iniparser": "^1.0.5",
+    "request": "^2.55.0",
+    "mysql": "^2.7.0",
+    "node-mysql": "^0.4.2",
+    "node-rest-client": "^1.5.1",
+    "restler": "^3.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
