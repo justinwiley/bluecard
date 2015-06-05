@@ -2,11 +2,9 @@
 
 Bluecard is a a prototype ID scanning system.
 
-It's designed to replace manual workflows, where a clerk is handed a license, and hand-types information contained on it.
+It's designed to replace manual registration workflows, where a clerk is handed a license, and hand-types information contained on it.
 
-Bluecard replaces that manual process with OCR.
-
-#### Note: this is a prototype.  Portions of it are non-functional.  It is not ready for production use.
+##### Note: this is a prototype.  Portions of it are non-functional.  It is not ready for production use.
 
 This project was created to:
 
