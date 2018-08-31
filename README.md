@@ -1,3 +1,5 @@
+*This repo is highly-dated and dependencies have known-security vulnerabilities.
+
 # Bluecard
 
 Bluecard is a a prototype ID scanning system.
